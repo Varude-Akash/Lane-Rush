@@ -20,8 +20,10 @@ An endless 3D highway driving game that runs directly in the browser.
 | --- | --- |
 | Left Arrow / A | Steer left |
 | Right Arrow / D | Steer right |
+| Shift / Up Arrow / W | Hold nitro boost |
+| P | Pause or resume |
 | Space / Enter | Start or restart |
-| Touch buttons | Mobile steering |
+| Touch buttons | Mobile steering and boost |
 
 ## Run locally
 
