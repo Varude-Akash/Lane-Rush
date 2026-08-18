@@ -1,4 +1,4 @@
-package com.varudeakash.lanerush
+package com.lanerush.game
 
 import io.flutter.embedding.android.FlutterActivity
 
