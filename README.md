@@ -4,6 +4,8 @@ An endless 3D highway driving game that runs directly in the browser.
 
 **Live game:** https://neon-drift-akashvarude3205s-projects.vercel.app
 
+**Privacy policy:** https://neon-drift-akashvarude3205s-projects.vercel.app/privacy-policy
+
 ## Features
 
 - WebGL 3D rendering with Three.js
