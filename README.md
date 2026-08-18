@@ -37,6 +37,19 @@ Then open http://localhost:8080.
 
 An internet connection is required when the game first loads because Three.js is imported from jsDelivr.
 
+## Android
+
+The `lane_rush_android` folder is a simple Flutter WebView wrapper around the same browser game.
+
+Build a test APK:
+
+```bash
+cd lane_rush_android
+flutter build apk --debug
+```
+
+The debug APK is generated at `lane_rush_android/build/app/outputs/flutter-apk/app-debug.apk`.
+
 ## Deploy
 
 ### Vercel
