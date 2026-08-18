@@ -1,4 +1,4 @@
-# Neon Drift 3D
+# Lane Rush
 
 An endless 3D highway driving game that runs directly in the browser.
 
