@@ -1,4 +1,4 @@
-package com.example.lane_rush_android
+package com.varudeakash.lanerush
 
 import io.flutter.embedding.android.FlutterActivity
 
