@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lane Rush Model Test</title>
+<style>
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#111;color:#fff;font-family:Arial,sans-serif}
+#hud{position:fixed;left:16px;top:16px;z-index:2;background:#000b;border:1px solid #fff3;padding:12px 14px;line-height:1.55;font-size:13px;max-width:360px}
+#hud b{color:#d8ff3e}
+#hud code{color:#9ee7ff}
+#status{color:#ffd36e}
+canvas{display:block}
+</style>
+</head>
+<body>
+<div id="hud">
+  <b>Model Test</b><br>
+  File: <code id="file"></code><br>
+  Status: <span id="status">loading...</span><br>
+  Preset: <code id="preset">none</code><br>
+  Bounds: <code id="bounds">...</code><br><br>
+  Keys: <code>1 2 3 4</code> rotate, <code>Q/E</code> scale, <code>R</code> reset<br>
+  Drag mouse to orbit, scroll to zoom.
+</div>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}</script>
+<script type="module">
+import * as THREE from 'three';
+import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
+import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
+
+const params=new URLSearchParams(location.search);
+const file=params.get('file')||'assets/models/orion_skylark_gt.glb';
+document.querySelector('#file').textContent=file;
+
+const scene=new THREE.Scene();
+scene.background=new THREE.Color(0x1a1f24);
+const camera=new THREE.PerspectiveCamera(55,innerWidth/innerHeight,.01,500);
+camera.position.set(6,4,8);
+const renderer=new THREE.WebGLRenderer({antialias:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+renderer.setSize(innerWidth,innerHeight);
+renderer.shadowMap.enabled=true;
+renderer.outputColorSpace=THREE.SRGBColorSpace;
+renderer.toneMapping=THREE.ACESFilmicToneMapping;
+document.body.append(renderer.domElement);
+
+const controls=new OrbitControls(camera,renderer.domElement);
+controls.target.set(0,1,0);
+controls.update();
+
+scene.add(new THREE.HemisphereLight(0xffffff,0x334455,2.8));
+const sun=new THREE.DirectionalLight(0xffffff,4);
+sun.position.set(6,9,5);
+sun.castShadow=true;
+scene.add(sun);
+
+const grid=new THREE.GridHelper(12,12,0x777777,0x333333);
+scene.add(grid);
+scene.add(new THREE.AxesHelper(3));
+
+let carRoot=null,baseScale=1,preset=0;
+const rotations=[
+  ['0',0],
+  ['90',Math.PI/2],
+  ['180',Math.PI],
+  ['-90',-Math.PI/2]
+];
+
+function fitModel(root){
+  const box=new THREE.Box3().setFromObject(root);
+  const size=new THREE.Vector3(),center=new THREE.Vector3();
+  box.getSize(size);
+  box.getCenter(center);
+  root.position.sub(center);
+  const box2=new THREE.Box3().setFromObject(root);
+  root.position.y-=box2.min.y;
+  baseScale=4.5/Math.max(size.x,size.y,size.z);
+  root.scale.setScalar(baseScale);
+  document.querySelector('#bounds').textContent=`${size.x.toFixed(2)} x ${size.y.toFixed(2)} x ${size.z.toFixed(2)}`;
+}
+
+function applyPreset(i){
+  if(!carRoot)return;
+  preset=(i+rotations.length)%rotations.length;
+  carRoot.rotation.y=rotations[preset][1];
+  document.querySelector('#preset').textContent=`Y ${rotations[preset][0]}deg, scale ${carRoot.scale.x.toFixed(3)}`;
+}
+
+new GLTFLoader().load(file,gltf=>{
+  carRoot=gltf.scene;
+  carRoot.traverse(o=>{
+    if(o.isMesh){
+      o.castShadow=true;
+      o.receiveShadow=true;
+      if(o.material){
+        o.material.side=THREE.DoubleSide;
+        o.material.needsUpdate=true;
+      }
+    }
+  });
+  fitModel(carRoot);
+  scene.add(carRoot);
+  applyPreset(0);
+  document.querySelector('#status').textContent='loaded';
+},err=>{
+  console.error(err);
+  document.querySelector('#status').textContent='failed - open console';
+});
+
+addEventListener('keydown',e=>{
+  if(e.key>='1'&&e.key<='4')applyPreset(+e.key-1);
+  if((e.key==='q'||e.key==='Q')&&carRoot){carRoot.scale.multiplyScalar(.9);applyPreset(preset)}
+  if((e.key==='e'||e.key==='E')&&carRoot){carRoot.scale.multiplyScalar(1.1);applyPreset(preset)}
+  if((e.key==='r'||e.key==='R')&&carRoot){carRoot.scale.setScalar(baseScale);applyPreset(0)}
+});
+
+addEventListener('resize',()=>{
+  camera.aspect=innerWidth/innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth,innerHeight);
+});
+
+function loop(){
+  controls.update();
+  renderer.render(scene,camera);
+  requestAnimationFrame(loop);
+}
+loop();
+</script>
+</body>
+</html>
