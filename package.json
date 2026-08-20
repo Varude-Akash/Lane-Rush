@@ -1,0 +1,26 @@
+{
+  "name": "lane-rush",
+  "version": "1.0.0",
+  "description": "A 3D endless highway driving game",
+  "type": "module",
+  "scripts": {
+    "dev": "npx serve .",
+    "build": "echo 'No build step required for static site'",
+    "lint": "echo 'No linter configured'",
+    "test": "echo 'No tests configured'"
+  },
+  "keywords": [
+    "game",
+    "3d",
+    "webgl",
+    "three.js"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@vercel/analytics": "^2.0.1"
+  },
+  "devDependencies": {
+    "serve": "^14.2.4"
+  }
+}
