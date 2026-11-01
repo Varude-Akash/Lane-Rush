@@ -1,0 +1,147 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.lanerush.mobile"
+4    android:versionCode="6"
+5    android:versionName="2.0.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="26"
+9        android:targetSdkVersion="35" />
+10    <!-- Needed to load gltf from network. -->
+11    <uses-permission android:name="android.permission.INTERNET" /> <!-- SceneView requires OpenGLES 3.0 or later for 3D rendering. -->
+11-->[io.github.sceneview:sceneview:4.0.0] /Users/sky/.gradle/caches/8.14/transforms/d2db3d58ccdd478034d847add3e2ed5f/transformed/sceneview-4.0.0/AndroidManifest.xml:8:5-67
+11-->[io.github.sceneview:sceneview:4.0.0] /Users/sky/.gradle/caches/8.14/transforms/d2db3d58ccdd478034d847add3e2ed5f/transformed/sceneview-4.0.0/AndroidManifest.xml:8:22-64
+12    <uses-feature
+12-->[io.github.sceneview:sceneview:4.0.0] /Users/sky/.gradle/caches/8.14/transforms/d2db3d58ccdd478034d847add3e2ed5f/transformed/sceneview-4.0.0/AndroidManifest.xml:11:5-13:35
+13        android:glEsVersion="0x00030000"
+13-->[io.github.sceneview:sceneview:4.0.0] /Users/sky/.gradle/caches/8.14/transforms/d2db3d58ccdd478034d847add3e2ed5f/transformed/sceneview-4.0.0/AndroidManifest.xml:12:9-41
+14        android:required="true" />
+14-->[io.github.sceneview:sceneview:4.0.0] /Users/sky/.gradle/caches/8.14/transforms/d2db3d58ccdd478034d847add3e2ed5f/transformed/sceneview-4.0.0/AndroidManifest.xml:13:9-32
+15
+16    <permission
+16-->[androidx.core:core:1.16.0] /Users/sky/.gradle/caches/8.14/transforms/e15d905977a677e42d965ae145c69337/transformed/core-1.16.0/AndroidManifest.xml:22:5-24:47
+17        android:name="com.lanerush.mobile.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+17-->[androidx.core:core:1.16.0] /Users/sky/.gradle/caches/8.14/transforms/e15d905977a677e42d965ae145c69337/transformed/core-1.16.0/AndroidManifest.xml:23:9-81
+18        android:protectionLevel="signature" />
+18-->[androidx.core:core:1.16.0] /Users/sky/.gradle/caches/8.14/transforms/e15d905977a677e42d965ae145c69337/transformed/core-1.16.0/AndroidManifest.xml:24:9-44
+19
+20    <uses-permission android:name="com.lanerush.mobile.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+20-->[androidx.core:core:1.16.0] /Users/sky/.gradle/caches/8.14/transforms/e15d905977a677e42d965ae145c69337/transformed/core-1.16.0/AndroidManifest.xml:26:5-97
+20-->[androidx.core:core:1.16.0] /Users/sky/.gradle/caches/8.14/transforms/e15d905977a677e42d965ae145c69337/transformed/core-1.16.0/AndroidManifest.xml:26:22-94
+21
+22    <application
+22-->/Users/sky/Projects/car driving game/Neon-Drift-3D/LaneRushNativeAndroid/app/src/main/AndroidManifest.xml:2:5-14:19
+23        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+23-->[androidx.core:core:1.16.0] /Users/sky/.gradle/caches/8.14/transforms/e15d905977a677e42d965ae145c69337/transformed/core-1.16.0/AndroidManifest.xml:28:18-86
+24        android:extractNativeLibs="false"
+25        android:hardwareAccelerated="true"
+25-->/Users/sky/Projects/car driving game/Neon-Drift-3D/LaneRushNativeAndroid/app/src/main/AndroidManifest.xml:2:76-110
+26        android:label="Lane Rush"
+26-->/Users/sky/Projects/car driving game/Neon-Drift-3D/LaneRushNativeAndroid/app/src/main/AndroidManifest.xml:2:50-75
+27        android:theme="@style/AppTheme" >
+27-->/Users/sky/Projects/car driving game/Neon-Drift-3D/LaneRushNativeAndroid/app/src/main/AndroidManifest.xml:2:18-49
+28        <activity
+28-->/Users/sky/Projects/car driving game/Neon-Drift-3D/LaneRushNativeAndroid/app/src/main/AndroidManifest.xml:3:9-13:20
+29            android:name="com.lanerush.mobile.MainActivity"
+29-->/Users/sky/Projects/car driving game/Neon-Drift-3D/LaneRushNativeAndroid/app/src/main/AndroidManifest.xml:4:13-41
+30            android:configChanges="orientation|screenSize|smallestScreenSize"
+30-->/Users/sky/Projects/car driving game/Neon-Drift-3D/LaneRushNativeAndroid/app/src/main/AndroidManifest.xml:6:13-78
+31            android:exported="true"
+31-->/Users/sky/Projects/car driving game/Neon-Drift-3D/LaneRushNativeAndroid/app/src/main/AndroidManifest.xml:8:13-36
+32            android:resizeableActivity="false"
+32-->/Users/sky/Projects/car driving game/Neon-Drift-3D/LaneRushNativeAndroid/app/src/main/AndroidManifest.xml:7:13-47
+33            android:screenOrientation="userLandscape" >
+33-->/Users/sky/Projects/car driving game/Neon-Drift-3D/LaneRushNativeAndroid/app/src/main/AndroidManifest.xml:5:13-54
+34            <intent-filter>
+34-->/Users/sky/Projects/car driving game/Neon-Drift-3D/LaneRushNativeAndroid/app/src/main/AndroidManifest.xml:9:13-12:29
+35                <action android:name="android.intent.action.MAIN" />
+35-->/Users/sky/Projects/car driving game/Neon-Drift-3D/LaneRushNativeAndroid/app/src/main/AndroidManifest.xml:10:17-69
+35-->/Users/sky/Projects/car driving game/Neon-Drift-3D/LaneRushNativeAndroid/app/src/main/AndroidManifest.xml:10:25-66
+36
+37                <category android:name="android.intent.category.LAUNCHER" />
+37-->/Users/sky/Projects/car driving game/Neon-Drift-3D/LaneRushNativeAndroid/app/src/main/AndroidManifest.xml:11:17-77
+37-->/Users/sky/Projects/car driving game/Neon-Drift-3D/LaneRushNativeAndroid/app/src/main/AndroidManifest.xml:11:27-74
+38            </intent-filter>
+39        </activity>
+40
+41        <provider
+41-->[androidx.emoji2:emoji2:1.4.0] /Users/sky/.gradle/caches/8.14/transforms/bf1f99cbe061eb5733488d21305c96d6/transformed/emoji2-1.4.0/AndroidManifest.xml:24:9-32:20
+42            android:name="androidx.startup.InitializationProvider"
+42-->[androidx.emoji2:emoji2:1.4.0] /Users/sky/.gradle/caches/8.14/transforms/bf1f99cbe061eb5733488d21305c96d6/transformed/emoji2-1.4.0/AndroidManifest.xml:25:13-67
+43            android:authorities="com.lanerush.mobile.androidx-startup"
+43-->[androidx.emoji2:emoji2:1.4.0] /Users/sky/.gradle/caches/8.14/transforms/bf1f99cbe061eb5733488d21305c96d6/transformed/emoji2-1.4.0/AndroidManifest.xml:26:13-68
+44            android:exported="false" >
+44-->[androidx.emoji2:emoji2:1.4.0] /Users/sky/.gradle/caches/8.14/transforms/bf1f99cbe061eb5733488d21305c96d6/transformed/emoji2-1.4.0/AndroidManifest.xml:27:13-37
+45            <meta-data
+45-->[androidx.emoji2:emoji2:1.4.0] /Users/sky/.gradle/caches/8.14/transforms/bf1f99cbe061eb5733488d21305c96d6/transformed/emoji2-1.4.0/AndroidManifest.xml:29:13-31:52
+46                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+46-->[androidx.emoji2:emoji2:1.4.0] /Users/sky/.gradle/caches/8.14/transforms/bf1f99cbe061eb5733488d21305c96d6/transformed/emoji2-1.4.0/AndroidManifest.xml:30:17-75
+47                android:value="androidx.startup" />
+47-->[androidx.emoji2:emoji2:1.4.0] /Users/sky/.gradle/caches/8.14/transforms/bf1f99cbe061eb5733488d21305c96d6/transformed/emoji2-1.4.0/AndroidManifest.xml:31:17-49
+48            <meta-data
+48-->[androidx.lifecycle:lifecycle-process:2.9.4] /Users/sky/.gradle/caches/8.14/transforms/69fbf27bf3d44530860256da731ee26d/transformed/lifecycle-process-2.9.4/AndroidManifest.xml:29:13-31:52
+49                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+49-->[androidx.lifecycle:lifecycle-process:2.9.4] /Users/sky/.gradle/caches/8.14/transforms/69fbf27bf3d44530860256da731ee26d/transformed/lifecycle-process-2.9.4/AndroidManifest.xml:30:17-78
+50                android:value="androidx.startup" />
+50-->[androidx.lifecycle:lifecycle-process:2.9.4] /Users/sky/.gradle/caches/8.14/transforms/69fbf27bf3d44530860256da731ee26d/transformed/lifecycle-process-2.9.4/AndroidManifest.xml:31:17-49
+51            <meta-data
+51-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/sky/.gradle/caches/8.14/transforms/ddf5f14ee82df347eb5c02ca17bf3b08/transformed/profileinstaller-1.4.0/AndroidManifest.xml:29:13-31:52
+52                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+52-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/sky/.gradle/caches/8.14/transforms/ddf5f14ee82df347eb5c02ca17bf3b08/transformed/profileinstaller-1.4.0/AndroidManifest.xml:30:17-85
+53                android:value="androidx.startup" />
+53-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/sky/.gradle/caches/8.14/transforms/ddf5f14ee82df347eb5c02ca17bf3b08/transformed/profileinstaller-1.4.0/AndroidManifest.xml:31:17-49
+54        </provider>
+55
+56        <uses-library
+56-->[androidx.window:window:1.5.0] /Users/sky/.gradle/caches/8.14/transforms/f540d7cf1dd8132345035a9a9f46761e/transformed/window-1.5.0/AndroidManifest.xml:23:9-25:40
+57            android:name="androidx.window.extensions"
+57-->[androidx.window:window:1.5.0] /Users/sky/.gradle/caches/8.14/transforms/f540d7cf1dd8132345035a9a9f46761e/transformed/window-1.5.0/AndroidManifest.xml:24:13-54
+58            android:required="false" />
+58-->[androidx.window:window:1.5.0] /Users/sky/.gradle/caches/8.14/transforms/f540d7cf1dd8132345035a9a9f46761e/transformed/window-1.5.0/AndroidManifest.xml:25:13-37
+59        <uses-library
+59-->[androidx.window:window:1.5.0] /Users/sky/.gradle/caches/8.14/transforms/f540d7cf1dd8132345035a9a9f46761e/transformed/window-1.5.0/AndroidManifest.xml:26:9-28:40
+60            android:name="androidx.window.sidecar"
+60-->[androidx.window:window:1.5.0] /Users/sky/.gradle/caches/8.14/transforms/f540d7cf1dd8132345035a9a9f46761e/transformed/window-1.5.0/AndroidManifest.xml:27:13-51
+61            android:required="false" />
+61-->[androidx.window:window:1.5.0] /Users/sky/.gradle/caches/8.14/transforms/f540d7cf1dd8132345035a9a9f46761e/transformed/window-1.5.0/AndroidManifest.xml:28:13-37
+62
+63        <receiver
+63-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/sky/.gradle/caches/8.14/transforms/ddf5f14ee82df347eb5c02ca17bf3b08/transformed/profileinstaller-1.4.0/AndroidManifest.xml:34:9-52:20
+64            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+64-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/sky/.gradle/caches/8.14/transforms/ddf5f14ee82df347eb5c02ca17bf3b08/transformed/profileinstaller-1.4.0/AndroidManifest.xml:35:13-76
+65            android:directBootAware="false"
+65-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/sky/.gradle/caches/8.14/transforms/ddf5f14ee82df347eb5c02ca17bf3b08/transformed/profileinstaller-1.4.0/AndroidManifest.xml:36:13-44
+66            android:enabled="true"
+66-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/sky/.gradle/caches/8.14/transforms/ddf5f14ee82df347eb5c02ca17bf3b08/transformed/profileinstaller-1.4.0/AndroidManifest.xml:37:13-35
+67            android:exported="true"
+67-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/sky/.gradle/caches/8.14/transforms/ddf5f14ee82df347eb5c02ca17bf3b08/transformed/profileinstaller-1.4.0/AndroidManifest.xml:38:13-36
+68            android:permission="android.permission.DUMP" >
+68-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/sky/.gradle/caches/8.14/transforms/ddf5f14ee82df347eb5c02ca17bf3b08/transformed/profileinstaller-1.4.0/AndroidManifest.xml:39:13-57
+69            <intent-filter>
+69-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/sky/.gradle/caches/8.14/transforms/ddf5f14ee82df347eb5c02ca17bf3b08/transformed/profileinstaller-1.4.0/AndroidManifest.xml:40:13-42:29
+70                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+70-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/sky/.gradle/caches/8.14/transforms/ddf5f14ee82df347eb5c02ca17bf3b08/transformed/profileinstaller-1.4.0/AndroidManifest.xml:41:17-91
+70-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/sky/.gradle/caches/8.14/transforms/ddf5f14ee82df347eb5c02ca17bf3b08/transformed/profileinstaller-1.4.0/AndroidManifest.xml:41:25-88
+71            </intent-filter>
+72            <intent-filter>
+72-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/sky/.gradle/caches/8.14/transforms/ddf5f14ee82df347eb5c02ca17bf3b08/transformed/profileinstaller-1.4.0/AndroidManifest.xml:43:13-45:29
+73                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+73-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/sky/.gradle/caches/8.14/transforms/ddf5f14ee82df347eb5c02ca17bf3b08/transformed/profileinstaller-1.4.0/AndroidManifest.xml:44:17-85
+73-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/sky/.gradle/caches/8.14/transforms/ddf5f14ee82df347eb5c02ca17bf3b08/transformed/profileinstaller-1.4.0/AndroidManifest.xml:44:25-82
+74            </intent-filter>
+75            <intent-filter>
+75-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/sky/.gradle/caches/8.14/transforms/ddf5f14ee82df347eb5c02ca17bf3b08/transformed/profileinstaller-1.4.0/AndroidManifest.xml:46:13-48:29
+76                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+76-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/sky/.gradle/caches/8.14/transforms/ddf5f14ee82df347eb5c02ca17bf3b08/transformed/profileinstaller-1.4.0/AndroidManifest.xml:47:17-88
+76-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/sky/.gradle/caches/8.14/transforms/ddf5f14ee82df347eb5c02ca17bf3b08/transformed/profileinstaller-1.4.0/AndroidManifest.xml:47:25-85
+77            </intent-filter>
+78            <intent-filter>
+78-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/sky/.gradle/caches/8.14/transforms/ddf5f14ee82df347eb5c02ca17bf3b08/transformed/profileinstaller-1.4.0/AndroidManifest.xml:49:13-51:29
+79                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+79-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/sky/.gradle/caches/8.14/transforms/ddf5f14ee82df347eb5c02ca17bf3b08/transformed/profileinstaller-1.4.0/AndroidManifest.xml:50:17-95
+79-->[androidx.profileinstaller:profileinstaller:1.4.0] /Users/sky/.gradle/caches/8.14/transforms/ddf5f14ee82df347eb5c02ca17bf3b08/transformed/profileinstaller-1.4.0/AndroidManifest.xml:50:25-92
+80            </intent-filter>
+81        </receiver>
+82    </application>
+83
+84</manifest>

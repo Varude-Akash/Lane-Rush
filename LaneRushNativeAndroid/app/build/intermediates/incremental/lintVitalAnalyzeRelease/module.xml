@@ -1,0 +1,18 @@
+<lint-module
+    format="1"
+    dir="/Users/sky/Projects/car driving game/Neon-Drift-3D/LaneRushNativeAndroid/app"
+    name=":app"
+    type="APP"
+    maven="LaneRushNative:app:unspecified"
+    agpVersion="8.11.1"
+    buildFolder="build"
+    bootClassPath="/Users/sky/Library/Android/sdk/platforms/android-35/android.jar:/Users/sky/Library/Android/sdk/build-tools/35.0.0/core-lambda-stubs.jar"
+    javaSourceLevel="17"
+    compileTarget="android-35">
+  <lintOptions
+      abortOnError="true"
+      absolutePaths="true"
+      checkReleaseBuilds="true"
+      explainIssues="true"/>
+  <variant name="release"/>
+</lint-module>
