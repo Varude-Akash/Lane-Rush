@@ -20,8 +20,8 @@ public static class LaneRushBuild
         PlayerSettings.companyName = "Lane Rush";
         PlayerSettings.productName = "Lane Rush";
         PlayerSettings.SetApplicationIdentifier(NamedBuildTarget.Android, "com.lanerush.mobile");
-        PlayerSettings.bundleVersion = "2.0.5";
-        PlayerSettings.Android.bundleVersionCode = 13;
+        PlayerSettings.bundleVersion = "2.0.6";
+        PlayerSettings.Android.bundleVersionCode = 14;
         PlayerSettings.defaultInterfaceOrientation = UIOrientation.LandscapeLeft;
         PlayerSettings.allowedAutorotateToPortrait = false;
         PlayerSettings.allowedAutorotateToPortraitUpsideDown = false;
@@ -166,7 +166,7 @@ public static class LaneRushBuild
         BuildReport report = BuildPipeline.BuildPlayer(new BuildPlayerOptions
         {
             scenes = EnabledScenes(),
-            locationPathName = "Builds/Android/Lane-Rush-2.0.5.aab",
+            locationPathName = "Builds/Android/Lane-Rush-2.0.6.aab",
             target = BuildTarget.Android,
             options = BuildOptions.None
         });
@@ -182,7 +182,7 @@ public static class LaneRushBuild
         BuildReport report = BuildPipeline.BuildPlayer(new BuildPlayerOptions
         {
             scenes = EnabledScenes(),
-            locationPathName = "Builds/Android/Lane-Rush-2.0.5.apk",
+            locationPathName = "Builds/Android/Lane-Rush-2.0.6.apk",
             target = BuildTarget.Android,
             options = BuildOptions.Development
         });

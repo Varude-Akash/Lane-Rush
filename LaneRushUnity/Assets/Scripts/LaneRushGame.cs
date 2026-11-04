@@ -54,6 +54,7 @@ public sealed class LaneRushGame : MonoBehaviour
     private float elapsed;
     private float distance;
     private float speed = 120f;
+    private float bonusDistance;
     private float nitro = 100f;
     private float combo = 1f;
     private float spawnAccumulator;
@@ -319,9 +320,9 @@ public sealed class LaneRushGame : MonoBehaviour
         }
         nitro = Mathf.Clamp(nitro + (boosting ? -32f : 13f) * dt, 0, 100);
         speed = Mathf.Min(320f, 120f + elapsed * 4f + (boosting ? 70f : 0f));
-        distance += speed / 3.6f * dt;
+        distance = Mathf.Floor(elapsed * speed * 0.12f + bonusDistance);
         combo = Mathf.Max(1f, combo - dt * 0.08f);
-        float worldStep = speed / 3.6f * dt;
+        float worldStep = (22f + speed * 0.16f + (boosting ? 13f : 0f)) * dt;
 
         float steer = Mathf.Abs(keyboardSteer) > 0.1f ? keyboardSteer : Mathf.Abs(guiSteer) > 0.1f ? guiSteer : TouchSteer();
         lateralVelocity += steer * (boosting ? 38f : 32f) * dt;
@@ -406,35 +407,39 @@ public sealed class LaneRushGame : MonoBehaviour
         if (spawnAccumulator <= 0)
         {
             ActivateTraffic(difficulty);
-            spawnAccumulator = Mathf.Max(0.42f, 1.15f - difficulty * 0.22f) + UnityEngine.Random.Range(0.1f, 0.3f);
+            if (difficulty > 0.55f && UnityEngine.Random.value < Mathf.Min(0.34f, difficulty * 0.12f)) ActivateTraffic(difficulty);
+            spawnAccumulator = Mathf.Max(0.34f, 1.12f - difficulty * 0.23f) + (boosting ? 0f : 0.14f)
+                + UnityEngine.Random.Range(0f, Mathf.Max(0.12f, 0.26f - difficulty * 0.04f));
         }
         foreach (TrafficCar car in traffic)
         {
             if (!car.root.gameObject.activeSelf) continue;
             Vector3 p = car.root.position;
             p.z -= worldStep - car.speed * dt;
-            if (difficulty > 0.10f) car.decision -= dt;
-            if (!car.changing && difficulty > 0.10f && car.decision <= 0 && p.z > 24f)
+            car.decision -= dt;
+            if (!car.signaling && difficulty > 0.75f && car.decision <= 0f
+                && UnityEngine.Random.value < Mathf.Min(0.35f, difficulty * 0.12f))
                 BeginLaneChange(car, difficulty);
-            if (car.changing)
+            if (car.signaling)
             {
                 car.signalTime += dt;
-                bool lit = Mathf.FloorToInt(car.signalTime * 4f) % 2 == 0;
+                bool lit = Mathf.FloorToInt(car.signalTime * 6f) % 2 == 0;
                 car.leftIndicator.gameObject.SetActive(lit && car.targetLane < car.lane);
                 car.rightIndicator.gameObject.SetActive(lit && car.targetLane > car.lane);
-                if (car.signalTime > 0.75f)
+                car.changeDelay -= dt;
+                if (car.changeDelay <= 0f && LaneClear(car, car.targetLane)) car.changing = true;
+                if (car.changeDelay < -1.4f && !car.changing)
+                {
+                    EndLaneChange(car);
+                }
+                else if (car.changing)
                 {
                     float goal = Lanes[car.targetLane];
-                    p.x = Mathf.MoveTowards(p.x, goal, (3.2f + difficulty * 0.25f) * dt);
-                    car.root.rotation = Quaternion.Euler(0, Mathf.Clamp((goal - p.x) * 1.4f, -6f, 6f), 0);
+                    p.x = Mathf.MoveTowards(p.x, goal, (1.45f + Mathf.Min(difficulty, 2f) * 0.25f) * dt);
                     if (Mathf.Abs(p.x - goal) < 0.01f)
                     {
                         car.lane = car.targetLane;
-                        car.changing = false;
-                        car.root.rotation = Quaternion.identity;
-                        car.leftIndicator.gameObject.SetActive(false);
-                        car.rightIndicator.gameObject.SetActive(false);
-                        car.decision = UnityEngine.Random.Range(2.4f, 4.2f);
+                        EndLaneChange(car);
                         Debug.Log($"LANE_RUSH_LANE_CHANGE_DONE lane={car.lane}");
                     }
                 }
@@ -445,45 +450,58 @@ public sealed class LaneRushGame : MonoBehaviour
             if (!car.passed && p.z < player.position.z)
             {
                 car.passed = true;
-                if (dx < 2.5f) { closeCalls++; combo = Mathf.Min(5, combo + 0.45f); distance += 18 * combo; Beep(720, 0.07f); }
+                if (dx < 2.5f) { closeCalls++; combo = Mathf.Min(5, combo + 0.45f); bonusDistance += Mathf.Round(18 * combo); Beep(720, 0.07f); }
             }
             if (dx < 1.55f && dz < 2.65f) Crash();
             if (p.z < -16f) car.root.gameObject.SetActive(false);
         }
     }
 
-    private void ActivateTraffic(float difficulty)
+    private void ActivateTraffic(float difficulty, float spawnZ = -1f, int fixedLane = -1)
     {
         TrafficCar car = traffic.Find(c => !c.root.gameObject.activeSelf);
         if (car == null) return;
-        int lane = UnityEngine.Random.Range(0, Lanes.Length);
+        int lane = fixedLane >= 0 ? fixedLane : UnityEngine.Random.Range(0, Lanes.Length);
         car.lane = car.targetLane = lane;
-        car.speed = UnityEngine.Random.Range(13f, 21f + difficulty * 3f);
-        car.decision = UnityEngine.Random.Range(1.2f, 2.8f);
+        car.speed = 13f + difficulty * 2f + UnityEngine.Random.Range(0f, 8f + difficulty * 4f);
+        car.decision = UnityEngine.Random.Range(1f, 3f);
         car.signalTime = 0;
-        car.changing = car.passed = false;
-        car.root.SetPositionAndRotation(new Vector3(Lanes[lane], 0.08f, UnityEngine.Random.Range(120f, 175f)), Quaternion.identity);
+        car.signaling = car.changing = car.passed = false;
+        car.root.SetPositionAndRotation(new Vector3(Lanes[lane], 0.08f, spawnZ > 0f ? spawnZ : UnityEngine.Random.Range(135f, 160f)), Quaternion.identity);
         car.leftIndicator.gameObject.SetActive(false);
         car.rightIndicator.gameObject.SetActive(false);
         car.root.gameObject.SetActive(true);
+        if (car.root.position.z > 70f && difficulty > 0.55f
+            && UnityEngine.Random.value < Mathf.Min(0.28f, difficulty * 0.10f)) BeginLaneChange(car, difficulty);
     }
 
     private void BeginLaneChange(TrafficCar car, float difficulty)
     {
-        int direction = car.lane == 0 ? 1 : car.lane == Lanes.Length - 1 ? -1 : UnityEngine.Random.value > 0.5f ? 1 : -1;
-        int target = car.lane + direction;
-        if (!LaneClear(car, target) && car.lane == 1) target = car.lane - direction;
-        if (!LaneClear(car, target)) { car.decision = UnityEngine.Random.Range(0.7f, 1.4f); return; }
+        if (car.signaling || car.root.position.z <= 45f) return;
+        int first = car.lane == 0 ? 1 : car.lane == Lanes.Length - 1 ? 1 : (UnityEngine.Random.value < 0.5f ? 0 : 2);
+        int target = first == 1 ? (car.lane == 0 ? 1 : car.lane == 2 ? 1 : 0) : first;
+        if (car.lane == 1 && !LaneClear(car, target)) target = 2 - target;
+        if (!LaneClear(car, target)) return;
         car.targetLane = target;
         car.signalTime = 0;
-        car.changing = true;
+        car.changeDelay = Mathf.Max(0.7f, 1.35f - difficulty * 0.16f) + UnityEngine.Random.Range(0f, 0.55f);
+        car.signaling = true;
+        car.changing = false;
         Debug.Log($"LANE_RUSH_LANE_CHANGE_START from={car.lane} to={target} z={car.root.position.z:0}");
+    }
+
+    private void EndLaneChange(TrafficCar car)
+    {
+        car.signaling = car.changing = false;
+        car.leftIndicator.gameObject.SetActive(false);
+        car.rightIndicator.gameObject.SetActive(false);
+        car.decision = UnityEngine.Random.Range(1.8f, 3.8f);
     }
 
     private bool LaneClear(TrafficCar source, int target)
     {
         foreach (TrafficCar other in traffic)
-            if (other != source && other.root.gameObject.activeSelf && other.targetLane == target && Mathf.Abs(other.root.position.z - source.root.position.z) < 22f)
+            if (other != source && other.root.gameObject.activeSelf && other.targetLane == target && Mathf.Abs(other.root.position.z - source.root.position.z) < 18f)
                 return false;
         return true;
     }
@@ -491,8 +509,8 @@ public sealed class LaneRushGame : MonoBehaviour
     private void ResetRun(bool start)
     {
         foreach (TrafficCar car in traffic) car.root.gameObject.SetActive(false);
-        targetX = lateralVelocity = elapsed = distance = 0;
-        speed = 120; nitro = 100; combo = 1; closeCalls = 0; spawnAccumulator = 0;
+        targetX = lateralVelocity = elapsed = distance = bonusDistance = 0;
+        speed = 120; nitro = 100; combo = 1; closeCalls = 0; spawnAccumulator = 1f;
         steerPointer = boostPointer = -1;
         guiBoostHeld = false;
         player.position = new Vector3(0, 0.1f, 4f);
@@ -503,6 +521,12 @@ public sealed class LaneRushGame : MonoBehaviour
         enginePlaybackConfirmed = false;
         boostPlaybackConfirmed = false;
         running = start;
+        if (start)
+        {
+            ActivateTraffic(0f, 52f, 0);
+            ActivateTraffic(0f, 82f, 2);
+            ActivateTraffic(0f, 112f, 1);
+        }
         if (start && engineAudio.clip != null)
         {
             if (engineAudio.clip.loadState == AudioDataLoadState.Unloaded) engineAudio.clip.LoadAudioData();
@@ -776,6 +800,8 @@ public sealed class LaneRushGame : MonoBehaviour
         public float speed;
         public float decision;
         public float signalTime;
+        public float changeDelay;
+        public bool signaling;
         public bool changing;
         public bool passed;
     }
